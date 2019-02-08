@@ -16,7 +16,26 @@ int N, img_number = 0, no_wars = 0;
 bool pixels[25][25] = {}, visited[25][25] = {};
 char cell;
 
-void travel(int i, int j);
+void dfs(int i, int j){
+    if (i >= N || j >= N || j < 0 || i < 0) return;
+    if (visited[i][j] || !pixels[i][j]) return;
+
+    visited[i][j] = 1;
+    //  (i-1, j-1)    (i-1, j)  (i-1, j+1)
+    //   (i, j-1)      (i,j)     (i, j+1)
+    //  (i+1, j-1)    (i+1, j)  (i+1, j+1)
+
+    dfs(i, j-1); // LEFT
+    dfs(i, j+1); // RIGHT
+
+    dfs(i-1, j);  // UP
+    dfs(i-1, j+1); // TOP RIGHT
+    dfs(i-1, j-1); // TOP LEFT
+
+    dfs(i+1, j);  // DOWN
+    dfs(i+1, j-1); // BOTTOM LEFT
+    dfs(i+1, j+1); // BOTTOM RIGHT
+}
 
 int main () {
 
@@ -31,14 +50,14 @@ int main () {
 
                 visited[i][j] = 0;           // initialization
             }
-            scanf("%c", &cell);
+            scanf("%c", &cell);              // for '\n' at the end;
         }
 
         for (int i = 0; i < N; i++){
             for (int j = 0; j < N; j++){
                 if (visited[i][j] || !pixels[i][j]) continue;
 
-                travel(i, j);
+                dfs(i, j);
                 no_wars++;
             }
         }
@@ -47,27 +66,6 @@ int main () {
     }
     
     return 0;
-}
-
-void travel(int i, int j){
-    if (i >= N || j >= N || j < 0 || i < 0) return;
-    if (visited[i][j] || !pixels[i][j]) return;
-
-    visited[i][j] = 1;
-    //  (i-1, j-1)    (i-1, j)  (i-1, j+1)
-    //   (i, j-1)      (i,j)     (i, j+1)
-    //  (i+1, j-1)    (i+1, j)  (i+1, j+1)
-
-    travel(i, j-1); // LEFT
-    travel(i, j+1); // RIGHT
-
-    travel(i-1, j);  // UP
-    travel(i-1, j+1); // TOP RIGHT
-    travel(i-1, j-1); // TOP LEFT
-
-    travel(i+1, j);  // DOWN
-    travel(i+1, j-1); // BOTTOM LEFT
-    travel(i+1, j+1); // BOTTOM RIGHT
 }
 
 /*
@@ -97,7 +95,7 @@ Image number 2 contains 6 war eagles.
 
 Resources:-
 -------------
-Video Solution (Arabic) []: 
+Video Solution (Arabic) [C++] [Eng Mohamed Nasser]: https://www.youtube.com/watch?v=-nRiMjHEIUg
 
 Explanation:
 ---------------
