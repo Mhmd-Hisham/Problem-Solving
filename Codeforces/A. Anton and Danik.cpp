@@ -12,36 +12,43 @@ LinkedIn: www.linkedin.com/in/Mhmd-Hisham
 
 using namespace std;
 
-int N = 0, A, D;
-string S;
+int N, A, D;
+char ch;
 
-int main () {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
-	cin >> N >> S;
-	
-	A = count(S.begin(), S.end(), 'A');
-	D = count(S.begin(), S.end(), 'D');
+int main (){
+    scanf("%d\n", &N);
+    
+    while (N--){
+        scanf("%c", &ch);
+        A += ch == 'A';
+        D += ch == 'D';
+    }
     
     if (A == D)
-        cout << "Friendship\n";
+        printf("Friendship\n");
 
     else if (A > D)
-        cout << "Anton\n";
+        printf("Anton\n");
 
     else
-        cout << "Danik\n";
+        printf("Danik\n");
 
-	return 0;
+    return 0;
 }
 /*
-input:-
------------
+Sample input:-
+-----------------
 6
 ADAAAA
 
-output:-
------------
+Sample output:-
+-----------------
 Anton
+
+Resources:-
+-------------
+
+Explanation:
+---------------
 
 */
