@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 /*
 Problem: 10305 - Ordering Tasks
-Link   : https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=1246
+Link   : https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=24&page=show_problem&problem=1246
 
 Solution by: Mohamed Hisham El-Banna
 
@@ -12,42 +12,54 @@ LinkedIn: www.linkedin.com/in/Mhmd-Hisham
 
 using namespace std;
 
-int N, M, i, j;
+typedef signed long long ll;
+typedef unsigned long long ull;
 
-bool visited[102];
-int graph[102][102], topsort[102], idx;
+#define fastio ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
 
-void dfs(int node){
-    visited[node] = 1;
+int N, M;
+int graph[1001][1001];
+int visited[1001];
+int topsort[1001], idx;
+
+void DFS(int node){
+    if (visited[node]) return;
     
-    for (int child = 0; child < N; child++){
+    visited[node] = true;
+    
+    for (int child = 0; child < N; ++child){
         if (graph[node][child] && !visited[child])
-            dfs(child);
+            
+            DFS(child);
     }
     
-    topsort[idx] = node+1; idx--;
+    topsort[--idx] = node+1;
 }
 
 int main () {
-
-    while ( scanf("%d %d\n", &N, &M) && N && M ){
-        memset(visited, 0, sizeof(visited));
-        memset(graph, 0, sizeof(graph));
+    fastio;
+    
+    while (cin >> N >> M && N){
         
-        idx = N-1;        
+        memset(visited, 0, sizeof(visited));
+        memset(topsort, 0, sizeof(topsort));
+        memset(graph, 0, sizeof(graph[0][0]) * N * N);
+        
+        idx = N;
+
+        int i, j;
         while (M--){
-            scanf("%d %d\n", &i ,&j);
+            cin >> i >> j;
             graph[i-1][j-1] = 1;
         }
-
-        for (int parent = 0; parent < N; parent++){
-            if (!visited[parent]) dfs(parent);
-        }
         
-        for (int i = 0; i < N-1; i++)
-            printf("%d ", topsort[i]);
+        for (int node = 0; node < N; node++)
+            if (!visited[node]) DFS(node);
+    
+        for (int i = 0; i < N; ++i)
+            cout << topsort[i] << ' ';
         
-        printf("%d\n", topsort[N-1]);
+        cout << '\n';
     }
 
     return 0;
@@ -66,9 +78,12 @@ Sample output:-
 -----------------
 1 4 2 5 3
 
+4 1 5 2 3 
+
+
 Resources:-
 -------------
-Video Solution (Arabic) (c++) [Eng Yahia Ashraf]: https://www.youtube.com/watch?v=4t-4ZC8BRj8
+
 
 Explanation:
 ---------------
