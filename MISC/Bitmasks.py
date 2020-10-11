@@ -4,6 +4,7 @@ import math
 
 def flip_mask(x):
     # O(log2 x)
+    return x^((1<<math.ceil(math.log2(x)))-1)
     return ~x & (1<<(int(math.log2(x))+1))-1
 
 def xorZeroToX(x):
