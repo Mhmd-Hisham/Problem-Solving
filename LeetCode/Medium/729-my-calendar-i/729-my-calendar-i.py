@@ -4,13 +4,12 @@ class MyCalendar:
         self.events = []
 
     def book(self, start: int, end: int) -> bool:
-        
-        cant_book = lambda x, y, s, e: (x == s) or (s < x < e) or (s < y <= e)
-        x, y = start, end
+        cant_book = lambda x, y, s, e: (s <= x < e) or (s < y <= e)
         for s, e in self.events:
-            if cant_book(x, y, s, e) or \
-               cant_book(s, e, x, y):
+            if cant_book(start, end, s, e) or \
+               cant_book(s, e, start, end):
                 return False
+
         self.events.append((start, end))
         return True
         
